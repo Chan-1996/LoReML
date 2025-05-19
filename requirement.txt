@@ -12,4 +12,3 @@ progress
 huggingface_hub
 evaluate
 nltk
-spops
