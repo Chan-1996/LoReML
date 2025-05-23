@@ -401,8 +401,6 @@ def main():
     if args.task_name is not None:
         # Downloading and loading a dataset from the hub.
         raw_datasets = load_dataset("glue", args.task_name)
-        # data_dir = '/home/bld/data/glue/' + args.task_name + '_dataset'
-        # raw_datasets = load_from_disk(data_dir)
     else:
         # Loading the dataset from local csv or json file.
         data_files = {}
@@ -671,9 +669,6 @@ def main():
     # Get the metric function
     if args.task_name is not None:
         metric = load_metric("glue", args.task_name)
-        # metric = load_metric(
-        #     "/home/bld/code/peft_finetuning/glue.py",
-        #     args.task_name)
     else:
         metric = load_metric("accuracy")
 
