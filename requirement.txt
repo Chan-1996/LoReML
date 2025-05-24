@@ -1,8 +1,8 @@
-torch==2.0.0
+torch==2.2.1
 transformers==4.36.2
 deepspeed==0.10.0
-accelerate==0.22.1
-spops
+accelerate==0.26.0
+lm-eval==0.4.5
 datasets
 tokenizers
 tensorboardX
@@ -12,3 +12,4 @@ progress
 huggingface_hub
 evaluate
 nltk
+spops
