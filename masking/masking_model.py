@@ -240,7 +240,7 @@ class Masking:
                         in_dim = self.model.config.intermediate_size
                     else:
                         in_dim = self.model.config.hidden_size
-                    if (self.model.config.model_type == 'llama' or self.model.config.model_type == 'deepseek') and module_name == 'lm_head':
+                    if self.model.config.model_type in ["llama", "deepseek", "qwen2", "qwen3"] and module_name == 'lm_head':
                         out_dim = self.model.config.vocab_size
 
                 setattr(parent_module, sub_key, MaskingLinear(base_Linear=module, in_dim=in_dim, out_dim=out_dim,
@@ -253,15 +253,18 @@ class Masking:
                 if isinstance(module, BartLearnedPositionalEmbedding) or isinstance(module, OPTLearnedPositionalEmbedding)\
                         or isinstance(module, MBartLearnedPositionalEmbedding):
                     continue
+                if "lm_head" in key and self.model.config.model_type in ["qwen2", "qwen3"]:
+                   continue
+
                 out_dim = self.model.config.hidden_size
                 # print(module)
                 if 'token_type' in key:
                     setattr(parent_module, sub_key, MaskingEmbedding(base_Embedding=module, out_dim=out_dim,
-                                                              mask=mask_dict[key], fp16=self.fp16, padding_idx=None))
+                                                                  mask=mask_dict[key], fp16=self.fp16, padding_idx=None))
                 else:
                     setattr(parent_module, sub_key, MaskingEmbedding(base_Embedding=module, out_dim=out_dim,
-                                                                     mask=mask_dict[key], fp16=self.fp16,
-                                                                     padding_idx=self.model.config.pad_token_id))
+                                                                         mask=mask_dict[key], fp16=self.fp16,
+                                                                         padding_idx=self.model.config.pad_token_id))
 
         for n, p in model.named_parameters():
             if "tunable_weights" not in n:
