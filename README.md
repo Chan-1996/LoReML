@@ -1,9 +1,6 @@
-# Core code for the Work "Efficient Mask Learning for Language Model Fine-Tuning"
+# [CIKM 2025] Efficient Mask Learning for Language Model Fine-Tuning
 
 
-## Hyperparameters
-
-Please refer to the appendix.pdf for the hyperparameters used in our experiments.
 
 ## Qucik Start
 
@@ -46,3 +43,13 @@ Modify the hyper-parameters in run_masking.sh, then
 ```
 bash run_masking.sh
 ```
+(3) Evaluate on the MMLU benchmark:
+
+Modify the path of the fine-tuned model.
+```
+bash evaluate.sh
+```
+
+## Hyperparameters
+
+Please refer to the Appendix.pdf for the hyperparameters used in our experiments.
